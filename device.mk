@@ -291,10 +291,6 @@ PRODUCT_PACKAGES += \
     vendor.qti.hardware.display.mapper@3.0.vendor \
     vendor.qti.hardware.display.mapper@4.0.vendor
 
-# Doze
-PRODUCT_PACKAGES += \
-    OnePlusDoze
-
 # DRM
 PRODUCT_PACKAGES += \
     android.hardware.drm@1.3.vendor \
@@ -424,6 +420,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_BOOT_JARS += \
     oneplus-fwk.oneplus_kona
 
+# OnePlusSettings
+PRODUCT_PACKAGES += \
+    OnePlusSettings
+
 # Power
 PRODUCT_PACKAGES += \
     android.hardware.power-service-qti \
@@ -487,8 +487,7 @@ PRODUCT_COPY_FILES += \
 
 # tri-state-key
 PRODUCT_PACKAGES += \
-    KeyHandler \
-    tri-state-key-calibrate
+    tri-state-key_daemon
 
 # Update engine
 PRODUCT_PACKAGES += \
