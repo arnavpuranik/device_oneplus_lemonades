@@ -3,7 +3,7 @@
 source $ANDROID_BUILD_TOP/system/tools/hidl/update-makefiles-helper.sh
 
 do_makefiles_update \
-  "vendor.goodix:device/oneplus/sm8250-common/interfaces/goodix"
+  "vendor.goodix:device/oneplus/lemonades/interfaces/goodix"
 
 do_makefiles_update \
-  "vendor.oneplus:device/oneplus/sm8250-common/interfaces/oneplus"
+  "vendor.oneplus:device/oneplus/lemonades/interfaces/oneplus"
