@@ -66,7 +66,6 @@ on fs
     wait /mnt/vendor/op2
     chown system system /mnt/vendor/op2
     mkdir /mnt/vendor/op2/rbr_log 0770 system system
-    setprop vendor.oem.rbr.log.clean 1
 #endif /* VENDOR_EDIT */
     chown root system /mnt/vendor/persist
     chmod 0771 /mnt/vendor/persist
@@ -256,18 +255,6 @@ service vendor.cnss_diag /system/vendor/bin/cnss_diag -q -f -b 128 -t HELIUM
    group system wifi inet sdcard_rw media_rw diag
    disabled
    oneshot
-
-#ifdef VENDOR_EDIT
-# ajinath@SYSTEM, 2020/01/16, [OSP-2080] Recovery boot reason
-on property:vendor.oem.rbr.log.clean=1
-   rm /mnt/vendor/op2/rbr_log/.last_init_boot_failed.log.busy
-   rm /mnt/vendor/op2/rbr_log/.last_init_boot_failed.log.done
-   rm /mnt/vendor/op2/rbr_log/last_init_boot_failed.log
-   rm /mnt/vendor/op2/rbr_log/last_init_boot_failed.1.log
-   rm /mnt/vendor/op2/rbr_log/last_system_boot_failed.log
-   rm /mnt/vendor/op2/rbr_log/crash_recovery_log.txt
-   setprop vendor.oem.rbr.log.clean 0
-#endif /* VENDOR_EDIT */
 
 service dcvs-sh /vendor/bin/init.qti.dcvs.sh
     class late_start
