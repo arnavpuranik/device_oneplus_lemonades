@@ -25,4 +25,8 @@
 
     <!-- Default radius of the software rounded corners. -->
     <dimen name="rounded_corner_radius">35dp</dimen>
+
+    <!-- The default height of the status bar used in {@link SystemBarUtils#getStatusBarHeight} to
+         calculate the status bar height. -->
+    <dimen name="status_bar_height_default">@dimen/status_bar_height</dimen>
 </resources>
