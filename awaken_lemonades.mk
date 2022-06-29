@@ -21,14 +21,35 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 # Inherit from lemonades device
 $(call inherit-product, device/oneplus/lemonades/device.mk)
 
-# Inherit some common Lineage stuff.
-$(call inherit-product, vendor/lineage/config/common_full_phone.mk)
+# Inherit some common Awaken stuff.
+$(call inherit-product, vendor/awaken/config/common_full_phone.mk)
 
 # Boot Animation
 TARGET_BOOT_ANIMATION_RES := 1080
 
+# Official
+AWAKEN_BUILD_TYPE := OFFICIAL
+
+# Quick Tap
+TARGET_SUPPORTS_QUICK_TAP := true
+
+# Google Recorder
+TARGET_SUPPORTS_GOOGLE_RECORDER := true
+
+# Face Unlock
+TARGET_FACE_UNLOCK_SUPPORTED := true
+
+# Live Wallpapers
+TARGET_INCLUDE_LIVE_WALLPAPERS := true
+
+# Next Gen Assistant
+TARGET_SUPPORTS_NEXT_GEN_ASSISTANT := true
+
+# Stock ARCore
+TARGET_INCLUDE_STOCK_ARCORE := true
+
 # Device identifier. This must come after all inclusions.
-PRODUCT_NAME := lineage_lemonades
+PRODUCT_NAME := awaken_lemonades
 PRODUCT_DEVICE := lemonades
 PRODUCT_MANUFACTURER := OnePlus
 PRODUCT_BRAND := OnePlus
