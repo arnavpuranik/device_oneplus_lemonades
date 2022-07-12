@@ -335,7 +335,16 @@ PRODUCT_PACKAGES += \
     OPlusSettingsResCommon \
     OPlusSettingsProviderResTarget \
     OPlusSystemUIResTarget \
+    OnePlus8TWifiResTarget \
     WifiResTarget
+
+# Overlay-oneplus9r
+PRODUCT_PACKAGES += \
+    OnePlus9RPowerProfileResTarget \
+    OnePlus9RSettingsProviderResTarget \
+    OnePlus9RWifiResTarget
+
+PRODUCT_ENFORCE_RRO_TARGETS := *
 
 # Partitions
 PRODUCT_USE_DYNAMIC_PARTITIONS := true
