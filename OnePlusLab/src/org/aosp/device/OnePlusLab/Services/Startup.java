@@ -27,8 +27,6 @@ import androidx.preference.PreferenceManager;
 
 import org.aosp.device.OnePlusLab.OnePlusLab;
 import org.aosp.device.OnePlusLab.ModeSwitch.DCModeSwitch;
-import org.aosp.device.OnePlusLab.ModeSwitch.EdgeTouchSwitch;
-import org.aosp.device.OnePlusLab.ModeSwitch.GameModeSwitch;
 import org.aosp.device.OnePlusLab.ModeSwitch.HBMModeSwitch;
 import org.aosp.device.OnePlusLab.Utils.FileUtils;
 import org.aosp.device.OnePlusLab.Utils.DozeUtils;
@@ -48,15 +46,6 @@ public class Startup extends BroadcastReceiver {
 
         enabled = sharedPrefs.getBoolean(OnePlusLab.KEY_HBM_SWITCH, false);
         restore(HBMModeSwitch.getFile(), enabled);
-
-        enabled = sharedPrefs.getBoolean(OnePlusLab.KEY_FPS_INFO, false);
-        if (enabled) context.startServiceAsUser(new Intent(context, FPSInfoService.class), UserHandle.CURRENT);
-
-        enabled = sharedPrefs.getBoolean(OnePlusLab.KEY_GAME_SWITCH, false);
-        restore(GameModeSwitch.getFile(), enabled);
-
-        enabled = sharedPrefs.getBoolean(OnePlusLab.KEY_EDGE_TOUCH, false);
-        restore(EdgeTouchSwitch.getFile(), enabled);
 
         DozeUtils.checkDozeService(context);
         OnePlusLab.restoreVibStrengthSetting(context);

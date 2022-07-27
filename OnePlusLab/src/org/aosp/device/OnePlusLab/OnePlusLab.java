@@ -39,14 +39,11 @@ import androidx.preference.PreferenceGroup;
 import androidx.preference.PreferenceManager;
 import androidx.preference.PreferenceScreen;
 
-import org.aosp.device.OnePlusLab.ModeSwitch.EdgeTouchSwitch;
 import org.aosp.device.OnePlusLab.ModeSwitch.DCModeSwitch;
-import org.aosp.device.OnePlusLab.ModeSwitch.GameModeSwitch;
 import org.aosp.device.OnePlusLab.ModeSwitch.HBMModeSwitch;
 import org.aosp.device.OnePlusLab.Preferences.CustomSeekBarPreference;
 import org.aosp.device.OnePlusLab.Preferences.SwitchPreference;
 import org.aosp.device.OnePlusLab.Preferences.VibratorStrengthPreference;
-import org.aosp.device.OnePlusLab.Services.FPSInfoService;
 import org.aosp.device.OnePlusLab.Services.HBMModeService;
 import org.aosp.device.OnePlusLab.Services.VolumeService;
 import org.aosp.device.OnePlusLab.Utils.FileUtils;
@@ -65,33 +62,20 @@ public class OnePlusLab extends PreferenceFragment
     public static final String KEY_HBM_SWITCH = "hbm";
     public static final String KEY_AUTO_HBM_SWITCH = "auto_hbm";
     public static final String KEY_AUTO_HBM_THRESHOLD = "auto_hbm_threshold";
-    public static final String KEY_FPS_INFO = "fps_info";
-    public static final String KEY_FPS_INFO_POSITION = "fps_info_position";
-    public static final String KEY_FPS_INFO_COLOR = "fps_info_color";
-    public static final String KEY_FPS_INFO_TEXT_SIZE = "fps_info_text_size";
     public static final String KEY_MUTE_MEDIA = "mute_media";
     public static final String KEY_NR_MODE_SWITCHER = "nr_mode_switcher";
     public static final String KEY_VIBSTRENGTH = "vib_strength";
     public static final String KEY_TOUCHPANEL = "touchpanel";
-    public static final String KEY_GAME_SWITCH = "game_mode";
-    public static final String KEY_GAME_INFO = "game_mode_info";
-    public static final String KEY_EDGE_TOUCH = "edge_touch";
 
     private static final String PREF_DOZE = "advanced_doze_settings";
 
     private static final String FILE_LEVEL = "/sys/devices/platform/soc/a8c000.i2c/i2c-3/3-005a/leds/vibrator/level";
     public static final String DEFAULT = "3";
 
-    private static ListPreference mFpsInfoColor;
-    private static ListPreference mFpsInfoPosition;
     private static ListPreference mNrModeSwitcher;
     private static Preference mDozeSettings;
-    private static Preference mGameModeInfo;
-    private static SwitchPreference mFpsInfo;
     private static SwitchPreference mDCModeSwitch;
     private static SwitchPreference mHBMModeSwitch;
-    private static SwitchPreference mGameModeSwitch;
-    private static SwitchPreference mEdgeTouchSwitch;
     private static SwitchPreference mAutoHBMSwitch;
     private static SwitchPreference mMuteMedia;
 
@@ -147,46 +131,12 @@ public class OnePlusLab extends PreferenceFragment
             return true;
         });
 
-        mFpsInfo = (SwitchPreference) findPreference(KEY_FPS_INFO);
-        mFpsInfo.setChecked(isFPSOverlayRunning());
-        mFpsInfo.setOnPreferenceChangeListener(this);
-
-        mFpsInfoPosition = (ListPreference) findPreference(KEY_FPS_INFO_POSITION);
-        mFpsInfoPosition.setOnPreferenceChangeListener(this);
-
-        mFpsInfoColor = (ListPreference) findPreference(KEY_FPS_INFO_COLOR);
-        mFpsInfoColor.setOnPreferenceChangeListener(this);
-
-        mFpsInfoTextSizePreference = (CustomSeekBarPreference) findPreference(KEY_FPS_INFO_TEXT_SIZE);
-        mFpsInfoTextSizePreference.setOnPreferenceChangeListener(this);
-
         mMuteMedia = (SwitchPreference) findPreference(KEY_MUTE_MEDIA);
         mMuteMedia.setChecked(PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean(OnePlusLab.KEY_MUTE_MEDIA, false));
         mMuteMedia.setOnPreferenceChangeListener(this);
 
         mNrModeSwitcher = (ListPreference) findPreference(KEY_NR_MODE_SWITCHER);
         mNrModeSwitcher.setOnPreferenceChangeListener(this);
-
-        mGameModeSwitch = (SwitchPreference) findPreference(KEY_GAME_SWITCH);
-        mGameModeInfo = (Preference) findPreference(KEY_GAME_INFO);
-        if (isGamingModeSupported()) {
-            if (GameModeSwitch.isSupported()) {
-                mGameModeSwitch.setEnabled(true);
-            } else {
-                mGameModeSwitch.setEnabled(false);
-                mGameModeSwitch.setSummary(getString(R.string.unsupported_feature));
-            }
-            mGameModeSwitch.setChecked(GameModeSwitch.isCurrentlyEnabled(getContext()));
-            mGameModeSwitch.setOnPreferenceChangeListener(new GameModeSwitch());
-        } else {
-            ((PreferenceGroup) findPreference(KEY_TOUCHPANEL)).removePreference(findPreference(KEY_GAME_SWITCH));
-            ((PreferenceGroup) findPreference(KEY_TOUCHPANEL)).removePreference(findPreference(KEY_GAME_INFO));
-        }
-
-        mEdgeTouchSwitch = (SwitchPreference) findPreference(KEY_EDGE_TOUCH);
-        mEdgeTouchSwitch.setEnabled(EdgeTouchSwitch.isSupported());
-        mEdgeTouchSwitch.setChecked(EdgeTouchSwitch.isCurrentlyEnabled(getContext()));
-        mEdgeTouchSwitch.setOnPreferenceChangeListener(new EdgeTouchSwitch());
 
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getContext());
 
@@ -214,47 +164,11 @@ public class OnePlusLab extends PreferenceFragment
         super.onResume();
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
         mHBMModeSwitch.setChecked(HBMModeSwitch.isCurrentlyEnabled(getContext()));
-        mFpsInfo.setChecked(isFPSOverlayRunning());
     }
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
-        if (preference == mFpsInfo) {
-            boolean enabled = (Boolean) newValue;
-            Intent fpsinfo = new Intent(getContext(), FPSInfoService.class);
-            if (enabled) {
-                getContext().startServiceAsUser(fpsinfo, UserHandle.CURRENT);
-            } else {
-                getContext().stopServiceAsUser(fpsinfo, UserHandle.CURRENT);
-            }
-        } else if (preference == mFpsInfoPosition) {
-            int position = Integer.parseInt(newValue.toString());
-            Context mContext = getContext();
-            if (FPSInfoService.isPositionChanged(mContext, position)) {
-                FPSInfoService.setPosition(mContext, position);
-                if (isFPSOverlayRunning()) {
-                    restartFpsInfo(mContext);
-                }
-            }
-        } else if (preference == mFpsInfoColor) {
-            int color = Integer.parseInt(newValue.toString());
-            Context mContext = getContext();
-            if (FPSInfoService.isColorChanged(mContext, color)) {
-                FPSInfoService.setColorIndex(mContext, color);
-                if (isFPSOverlayRunning()) {
-                    restartFpsInfo(mContext);
-                }
-            }
-        } else if (preference == mFpsInfoTextSizePreference) {
-            int size = Integer.parseInt(newValue.toString());
-            Context mContext = getContext();
-            if (FPSInfoService.isSizeChanged(mContext, size - 1)) {
-                FPSInfoService.setSizeIndex(mContext, size - 1);
-                if (isFPSOverlayRunning()) {
-                    restartFpsInfo(mContext);
-                }
-            }
-        } else if (preference == mAutoHBMSwitch) {
+          if (preference == mAutoHBMSwitch) {
             Boolean enabled = (Boolean) newValue;
             SharedPreferences.Editor prefChange = PreferenceManager.getDefaultSharedPreferences(getContext()).edit();
             prefChange.putBoolean(KEY_AUTO_HBM_SWITCH, enabled).commit();
@@ -299,26 +213,6 @@ public class OnePlusLab extends PreferenceFragment
                     Integer.parseInt(FileUtils.getFileValue(FILE_LEVEL, DEFAULT)));
             FileUtils.writeLine(FILE_LEVEL, String.valueOf(value));
         }
-    }
-
-    private boolean isFPSOverlayRunning() {
-        ActivityManager am = (ActivityManager) getContext().getSystemService(
-                Context.ACTIVITY_SERVICE);
-        for (ActivityManager.RunningServiceInfo service :
-                am.getRunningServices(Integer.MAX_VALUE))
-            if (FPSInfoService.class.getName().equals(service.service.getClassName()))
-                return true;
-        return false;
-   }
-
-    private void restartFpsInfo(Context context) {
-        Intent fpsinfo = new Intent(context, FPSInfoService.class);
-        context.stopServiceAsUser(fpsinfo, UserHandle.CURRENT);
-        context.startServiceAsUser(fpsinfo, UserHandle.CURRENT);
-    }
-
-    public static boolean isGamingModeSupported() {
-        return !Build.DEVICE.equals("instantnoodle");
     }
 
     private boolean setNrModeChecked(int mode) {

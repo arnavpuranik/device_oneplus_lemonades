@@ -71,26 +71,6 @@
     <string name="pocket_gesture_title">Pocket</string>
     <string name="pocket_gesture_summary">Pulse notifications on removal from pocket</string>
 
-    <!-- FPS Info -->
-    <string name="fps_title">FPS Info</string>
-    <string name="fps_info_title">FPS Overlay</string>
-    <string name="fps_info_summary">Show overlay with current frames per second</string>
-    <string name="fps_info_color_title">Text Color</string>
-    <string name="fps_info_color_green">Green</string>
-    <string name="fps_info_color_red">Red</string>
-    <string name="fps_info_color_blue">Blue</string>
-    <string name="fps_info_color_yellow">Yellow</string>
-    <string name="fps_info_color_black">Black</string>
-    <string name="fps_info_color_accent">Follow System</string>
-    <string name="fps_info_position_title">Overlay Position</string>
-    <string name="fps_info_position_top_left">Top left</string>
-    <string name="fps_info_position_top_center">Top center</string>
-    <string name="fps_info_position_top_right">Top right</string>
-    <string name="fps_info_position_bottom_left">Bottom left</string>
-    <string name="fps_info_position_bottom_center">Bottom center</string>
-    <string name="fps_info_position_bottom_right">Bottom right</string>
-    <string name="fps_info_text_size_title">Text Size</string>
-
     <!-- Network -->
     <string name="network_title">Network</string>
     <string name="nr_mode_switcher_title">5G Modes Switcher</string>
@@ -100,15 +80,6 @@
     <string name="nr_mode_switcher_warning">Please set again after reboot/changed data sim card</string>
     <string name="service_not_ready">Service not ready, please try again</string>
     <string name="unavailable_sim_slot">Unable to get current mobile data slot, please try again</string>
-
-    <!-- Touchpanel -->
-    <string name="touchpanel_title">Touchpanel</string>
-    <string name="game_mode_title">Touch Sample</string>
-    <string name="game_mode_summary">Boost touch sampling rate for all applications</string>
-    <string name="game_mode_warning">Increases power consumption</string>
-    <string name="edge_touch_title">TP Edge Limit</string>
-    <string name="edge_touch_summary">Disable the touchpanels edge limit</string>
-    <string name="edge_touch_warning">Increases possibility of accidental touch</string>
 
     <!-- Unsupported feature -->
     <string name="unsupported_feature">This feature is unavailable on current kernel</string>
