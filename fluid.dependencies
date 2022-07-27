@@ -1,0 +1,20 @@
+[
+  {
+    "remote":      "fluid-devices",
+    "repository":  "vendor_oneplus_lemonades",
+    "target_path": "vendor/oneplus/lemonades",
+    "branch":      "fluid-12.1"
+  },
+  {
+    "remote":      "fluid-devices",
+    "repository":  "kernel_oneplus_lemonades",
+    "target_path": "kernel/oneplus/lemonades",
+    "branch":      "fluid-12.1"
+  },
+  {
+    "remote":      "gitlab",
+    "repository":  "arnavpuranik/vendor_oneplus_addons_camera",
+    "target_path": "vendor/oneplus/addons/camera",
+    "branch":      "12.1"
+  }
+]
