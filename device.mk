@@ -427,9 +427,9 @@ PRODUCT_PACKAGES += \
 PRODUCT_BOOT_JARS += \
     oneplus-fwk.oneplus_kona
 
-# OnePlusSettings
+# OnePlus Lab
 PRODUCT_PACKAGES += \
-    OnePlusSettings
+    OnePlusLab
 
 # OnePlusDolby
 PRODUCT_COPY_FILES += \
