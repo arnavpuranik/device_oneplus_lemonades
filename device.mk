@@ -30,7 +30,7 @@ $(call inherit-product, frameworks/native/build/phone-xhdpi-6144-dalvik-heap.mk)
 $(call inherit-product, vendor/oneplus/lemonades/lemonades-vendor.mk)
 
 # Inherit OnePlusCamera from vendor/oneplus/addons/camera
-$(call inherit-product, vendor/oneplus/addons/camera/camera-vendor.mk)
+# $(call inherit-product, vendor/oneplus/addons/camera/camera-vendor.mk)
 
 # Additional native libraries
 PRODUCT_COPY_FILES += \
@@ -53,6 +53,10 @@ PRODUCT_AAPT_PREF_CONFIG := xxhdpi
 # Boot animation
 TARGET_SCREEN_HEIGHT := 2400
 TARGET_SCREEN_WIDTH := 1080
+
+# Gcam
+PRODUCT_PACKAGES += \
+    GoogleCameraGo
 
 # VNDK
 PRODUCT_USE_PRODUCT_VNDK_OVERRIDE := true
@@ -437,9 +441,9 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/dolby/dax-default.xml:$(TARGET_COPY_OUT_ODM)/etc/dolby/dax-default.xml
 
 # OnePlus Overlay
-PRODUCT_PACKAGES += \
-    OnePlusCameraOverlay \
-    OnePlusGalleryOverlay
+# PRODUCT_PACKAGES += \
+#    OnePlusCameraOverlay \
+#    OnePlusGalleryOverlay
 
 # Power
 PRODUCT_PACKAGES += \
