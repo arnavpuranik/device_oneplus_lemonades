@@ -41,10 +41,4 @@ PRODUCT_GMS_CLIENTID_BASE := android-oneplus
 
 PRODUCT_BUILD_PROP_OVERRIDES += \
     PRODUCT_DEVICE=OnePlus9R \
-    PRODUCT_NAME=OnePlus9R \
-    PRIVATE_BUILD_DESC="oplus-user 12 SKQ1.211006.001 1647272062518 release-keys"
-
-BUILD_FINGERPRINT := oplus/ossi/ossi:12/SKQ1.211006.001/1647272062518:user/release-keys
-
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.build.fingerprint=oplus/ossi/ossi:12/SKQ1.211006.001/1647272062518:user/release-keys
+    PRODUCT_NAME=OnePlus9R
