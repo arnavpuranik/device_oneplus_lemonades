@@ -14,6 +14,9 @@ $(call inherit-product, device/oneplus/lemonades/device.mk)
 # Inherit some common awaken stuff.
 $(call inherit-product, vendor/awaken/config/common_full_phone.mk)
 
+# Inherit OnePlus Lab
+$(call inherit-product, vendor/OnePlusLab/OnePlusLab.mk)
+
 # Boot Animation
 TARGET_BOOT_ANIMATION_RES := 1080
 
