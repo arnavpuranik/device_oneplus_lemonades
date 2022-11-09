@@ -65,6 +65,8 @@ on boot
     chmod 0666 /sys/class/drm/sde-crtc-0/measured_fps
 
 on property:ro.boot.prjname=*
+    enable secureelement-hal_1_2
+    
     # Display
     setprop ro.separate.soft ${ro.boot.prjname}
 
@@ -126,6 +128,13 @@ on property:sys.usb.ffs.ready=1 && property:sys.usb.config=rndis,diag,adb && pro
 on property:sys.usb.ffs.ready=1 && property:sys.usb.config=rndis,none,adb && property:sys.usb.configfs=1
     write /config/usb_gadget/g1/idVendor 0x22D9
     write /config/usb_gadget/g1/idProduct 0x2766
+
+service secureelement-hal_1_2 /vendor/bin/hw/vendor.qti.secure_element@1.2-service
+    override
+    class hal
+    user system
+    group system
+    disabled
 
 service oplus-sh /odm/bin/init.oplus.sh
     user root
